@@ -1,30 +1,45 @@
-# Dockerfile
-FROM php:8.2-fpm
+FROM php:8.2-apache
 
-# ติดตั้ง dependencies
+WORKDIR /var/www/html
+
+# ติดตั้ง dependencies พื้นฐาน
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev gnupg2 apt-transport-https
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg2 \
+    unixodbc-dev \
+    libzip-dev \
+    libssl-dev \
+    build-essential \
+    lsb-release \
+    unzip \
+    git \
+    && docker-php-ext-install pdo zip
 
-# ติดตั้ง Microsoft ODBC driver
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+# เพิ่ม Microsoft SQL Server repository สำหรับ Debian 12 (bookworm)
+RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft.gpg \
+    && echo "deb [signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/debian/12/prod bookworm main" > /etc/apt/sources.list.d/mssql-release.list \
     && apt-get update \
-    && ACCEPT_EULA=Y apt-get install -y msodbcsql18 unixodbc-dev
+    && ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools18 \
+    && ln -sfn /opt/mssql-tools18/bin/sqlcmd /usr/bin/sqlcmd \
+    && ln -sfn /opt/mssql-tools18/bin/bcp /usr/bin/bcp
 
-# ติดตั้ง PHP SQLSRV extension
+# ติดตั้ง SQLSRV extensions ผ่าน PECL
 RUN pecl install sqlsrv pdo_sqlsrv \
     && docker-php-ext-enable sqlsrv pdo_sqlsrv
 
-# ติดตั้ง Laravel dependencies
-RUN docker-php-ext-install pdo mbstring exif pcntl bcmath gd zip
+# เปิด mod_rewrite
+RUN a2enmod rewrite
 
-# ติดตั้ง Composer
-COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
+# Copy source code
+COPY . /var/www/html
 
-WORKDIR /var/www/html
-COPY . .
-RUN composer install --no-dev --optimize-autoloader
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# ตั้งสิทธิ์
+RUN chown -R www-data:www-data /var/www/html
 
-EXPOSE 9000
-CMD ["php-fpm"]
+# ติดตั้ง composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+
+EXPOSE 80

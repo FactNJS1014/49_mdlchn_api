@@ -2,51 +2,32 @@ version: '3.8'
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: modelchange-app
-    container_name: modelchange-app
-    restart: unless-stopped
-    working_dir: /var/www/html
+    build: .
+    container_name: modelchange_app
+    ports:
+      - "8000:80"
     volumes:
-      - .:/var/www/html
-    networks:
-      - modelchange-net
+      - ./:/var/www/html
     depends_on:
       - db
-
-  web:
-    image: nginx:latest
-    container_name: modelchange-web
-    restart: unless-stopped
-    ports:
-      - "8080:80"
-    volumes:
-      - .:/var/www/html
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-    networks:
-      - modelchange-net
-    depends_on:
-      - app
+    environment:
+      DB_CONNECTION: sqlsrv
+      DB_HOST: db
+      DB_PORT: 1433
+      DB_DATABASE: AM_MDLCHN
+      DB_USERNAME: sa
+      DB_PASSWORD:
 
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: modelchange-db
-    restart: unless-stopped
+    container_name: sql_server
     environment:
-      SA_PASSWORD: ""
-      ACCEPT_EULA: ""
-      MSSQL_PID: "Developer"
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
-    networks:
-      - modelchange-net
     volumes:
-      - sqlserver_data:/var/opt/mssql
-
-networks:
-  modelchange-net:
+      - sql_data:/var/opt/mssql
 
 volumes:
-  sqlserver_data:
+  sql_data:
