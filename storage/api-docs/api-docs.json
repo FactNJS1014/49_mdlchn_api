@@ -149,6 +149,23 @@
                 }
             }
         },
+        "/get/users": {
+            "get": {
+                "tags": [
+                    "Get Users"
+                ],
+                "summary": "Get users on web",
+                "operationId": "0b529620bde150c40da5623a856dc9e9",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
         "/oprform": {
             "post": {
                 "tags": [
@@ -1014,6 +1031,10 @@
         {
             "name": "Get Record Form",
             "description": "Get Record Form"
+        },
+        {
+            "name": "Get Users",
+            "description": "Get Users"
         },
         {
             "name": "Form",

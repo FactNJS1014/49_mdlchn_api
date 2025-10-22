@@ -19,12 +19,15 @@ Route::get('/get/count/opr', [ApiGetDataController::class, 'CountInsertOpr']);
 Route::get('/get/record/opr', [ApiGetDataController::class, 'GetRecordOpr']);
 Route::get('/get/oprform', [ApiGetDataController::class, 'GetOprForm']);
 Route::get('/get/alldata', [ApiGetDataController::class, 'GetAllData']);
+Route::get('users', [ApiGetDataController::class, 'GetUsersWeb']);
 
 //api post insert into database
 Route::post('/oprform', [ApiInsertController::class, 'InsertOPRForm']);
 Route::post('/oprform/rf', [ApiInsertController::class, 'InsertOPRFormRF']);
 Route::post('/cpinsert', [ApiInsertController::class, 'InsertTechCPForm']);
 Route::post('/rfinsert', [ApiInsertController::class, 'InsertTechRFForm']);
+Route::post('/insert/master', [ApiInsertController::class, 'MasterApprove']);
+Route::post('/insert/approve', [ApiInsertController::class, 'InsertAppr']);
 
 //api put and delete
 Route::put('/oprform/update/{id}', [ApiUpdateAndDeleteController::class, 'UpdateOprForm']);

@@ -527,4 +527,188 @@ class ApiInsertController extends Controller
 
         return response()->json(['status' => true]);
     }
+
+    /**
+     * @OA\Post(
+     *     path="/insert/master",
+     *     summary="Insert master user approve",
+     *     tags={"Form"},
+     *     @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(property="levels", type="string"),
+     *
+     *
+     *          )
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Success"
+     *     )
+     * )
+     */
+    public function MasterApprove(Request $request)
+    {
+        $data = $request->all();
+
+        $now = now();
+        $Ym = date('Ym');
+        $masterID = '';
+
+
+
+        $findPrevious = DB::table('APP_MASTER_TBL')
+            ->select('MASTER_ID')
+            ->orderBy('MASTER_ID', 'DESC')
+            ->get();
+
+        if (empty($findPrevious[0])) {
+            $masterID = 'MASID-' . $Ym . '-000001';
+        } else {
+            $masterID = AutogenerateKey('MASID', $findPrevious[0]->MASTER_ID);
+        }
+
+
+        DB::beginTransaction();
+        try {
+            $insertRows = [];
+            $dateTime = date('Y-m-d H:i:s');
+
+            foreach ($data['levels'] as $levelBlock) {
+                $insertRows[] = [
+                    'MASTER_ID' => $masterID,
+                    'MASTER_SEQ' => $levelBlock['level'],
+                    'MASTER_EMPID' => implode(',', $levelBlock['empnos']), // รวม EMPID ของ seq นั้น
+                    'MASTER_STD' => 1,
+                    'MASTER_LSTDT' => $dateTime,
+                ];
+            }
+
+
+            $existing = DB::table('APP_MASTER_TBL')
+                ->where('MASTER_STD', 1)
+                ->first();
+
+
+            if ($existing) {
+                // update แถวเดิม
+                DB::table('APP_MASTER_TBL')
+                    ->where('MASTER_ID', $existing->MASTER_ID)
+                    ->update(['MASTER_STD' => 0]);
+            }
+
+
+            // insert แถวใหม่
+            DB::table('APP_MASTER_TBL')->insert($insertRows);
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Approval recipients created.',
+                'inserted' => count($insertRows), // จะได้ 2 row ตาม level
+            ]);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/insert/approve",
+     *     summary="Insert approve of users",
+     *     tags={"Form"},
+     *     @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(property="OPR_HREC_ID", type="string"),
+     *              @OA\Property(property="TEC_CPORRF_HREC_ID", type="string"),
+     *              @OA\Property(property="MASTER_ID", type="string"),
+     *
+     *
+     *          )
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Success"
+     *     )
+     * )
+     */
+
+    public function InsertAppr(Request $request)
+    {
+        $data = $request->all();
+        $Ym = date('Ym');
+        $appsId = '';
+
+
+
+        $findPrevious = DB::table('APPREC_H_TBL')
+            ->select('APP_REC_ID')
+            ->orderBy('APP_REC_ID', 'DESC')
+            ->get();
+
+        if (empty($findPrevious[0])) {
+            $appsId = 'APPR-' . $Ym . '-000001';
+        } else {
+            $appsId = AutogenerateKey('APPR', $findPrevious[0]->APP_REC_ID);
+        }
+
+        DB::beginTransaction();
+        try {
+            $insertRows = [];
+            $dateTime = date('Y-m-d H:i:s');
+            $currentAppId = '';
+
+            $apps = DB::table('APP_MASTER_TBL')->where('MASTER_STD', 1)->get();
+            for ($i = 0; $i < sizeof($apps); $i++) {
+                $rows = $apps[$i];
+
+                // สร้าง APP_REC_ID ใหม่ตามลำดับ
+                if ($i === 0) {
+                    $currentAppId = $appsId; // แถวแรกใช้ $appsId ที่คำนวณมาแล้ว
+                } else {
+                    $currentAppId = AutogenerateKey('APPR', $currentAppId);
+                }
+
+                $insertRows[] = [
+                    'APP_REC_ID' => $currentAppId,
+                    'OPR_HREC_ID' => $data['OPR_HREC_ID'],
+                    'TEC_CPORRF_HREC_ID' => $data['TEC_CPHREC_ID'],
+                    'APP_REC_EMPNO' => $rows->MASTER_EMPID,
+                    'APP_REC_LEVEL' => $rows->MASTER_SEQ,
+                    'APP_REC_EMPAPP' => 0,
+                    'APP_REC_STD' => 0,
+                    'APP_REC_LSTDT' => $dateTime
+                ];
+            }
+
+            DB::table('APPREC_H_TBL')->insert($insertRows);
+
+            DB::table('OPR_HREC_TBL')
+                ->where('OPR_HREC_ID', $data['OPR_HREC_ID'])
+                ->update([
+                    'OPR_HREC_SENDAPP_STD' => 1
+                ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Approval recipients created.',
+                'inserted' => count($insertRows), // จะได้ 2 row ตาม level
+            ]);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 }
