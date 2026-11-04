@@ -19,29 +19,12 @@ Route::get('/get/count/opr', [ApiGetDataController::class, 'CountInsertOpr']);
 Route::get('/get/record/opr', [ApiGetDataController::class, 'GetRecordOpr']);
 Route::get('/get/oprform', [ApiGetDataController::class, 'GetOprForm']);
 Route::get('/get/alldata', [ApiGetDataController::class, 'GetAllData']);
-Route::get('users', [ApiGetDataController::class, 'GetUsersWeb']);
-Route::get('/approve/users', [ApiGetDataController::class, 'GetApproveUsers']);
-Route::get('/appr/data/cp', [ApiGetDataController::class, 'GetDataApprCP']);
-Route::get('/get/cus', [ApiGetDataController::class, 'GetDataCustomer']);
-Route::get('/get/issueno', [ApiGetDataController::class, 'GetIssueNo']);
-Route::get('/get/settings', [ApiGetDataController::class, 'GetSettings']);
-Route::get('/get/alerts', [ApiGetDataController::class, 'GetNotification']);
-Route::get('/get/reports', [ApiGetDataController::class, 'GetReports']);
-Route::get('/get/filter', [ApiGetDataController::class, 'DataFilters']);
-Route::get('/get/reports/nocomplete', [ApiGetDataController::class, 'GetReportsNoComplete']);
-Route::get('/get/rejectedData', [ApiGetDataController::class, 'GetRejectedData']);
-Route::get('/get/reports/byid', [ApiGetDataController::class, 'GetReportsById']);
 
 //api post insert into database
 Route::post('/oprform', [ApiInsertController::class, 'InsertOPRForm']);
 Route::post('/oprform/rf', [ApiInsertController::class, 'InsertOPRFormRF']);
 Route::post('/cpinsert', [ApiInsertController::class, 'InsertTechCPForm']);
 Route::post('/rfinsert', [ApiInsertController::class, 'InsertTechRFForm']);
-Route::post('/insert/master', [ApiInsertController::class, 'MasterApprove']);
-Route::post('/insert/approve', [ApiInsertController::class, 'InsertAppr']);
-Route::post('/insert/approve/rf', [ApiInsertController::class, 'InsertApprRF']);
-Route::post('/insert/settings', [ApiInsertController::class, 'InsertSettings']);
-Route::post('/rfinsert-test', [ApiInsertController::class, 'InsertTechRFFormTest']);
 
 //api put and delete
 Route::put('/oprform/update/{id}', [ApiUpdateAndDeleteController::class, 'UpdateOprForm']);

@@ -226,8 +226,12 @@ class ApiGetDataController extends Controller
             // ->join('APPREC_H_TBL', 'OPR_HREC_TBL.OPR_HREC_ID', '=', 'APPREC_H_TBL.OPR_HREC_ID')
             // ->join('APPREC_H_TBL as A2', 'TEC_CP_HREC_TBL.TEC_CPHREC_ID', '=', 'A2.TEC_CPORRF_HREC_ID')
             ->where('OPR_HREC_TBL.OPR_HREC_PROCS', '=', 'CP')
+<<<<<<< HEAD
             ->where('OPR_HREC_TBL.OPR_HREC_STD', '=', 1)
             ->where('OPR_HREC_TBL.OPR_HREC_RM_STD', '=', 0)
+=======
+            ->where('OPR_HREC_TBL.OPR_HREC_SENDAPP_STD', '=', null)
+>>>>>>> 6eff0287dc32e2ea99c50d6cc48fe346852a0a93
             ->select('OPR_HREC_TBL.*', 'TEC_CP_HREC_TBL.*')
             ->orderBy('OPR_HREC_TBL.OPR_HREC_ID', 'desc')
             ->get();
@@ -236,8 +240,12 @@ class ApiGetDataController extends Controller
         $rfData = DB::table('OPR_HREC_TBL')
             ->join('TEC_RF_HREC_TBL', 'OPR_HREC_TBL.OPR_HREC_ID', '=', 'TEC_RF_HREC_TBL.OPR_HREC_ID')
             ->where('OPR_HREC_TBL.OPR_HREC_PROCS', '=', 'RF')
+<<<<<<< HEAD
             ->where('OPR_HREC_TBL.OPR_HREC_STD', '=', 1)
             ->where('OPR_HREC_TBL.OPR_HREC_RM_STD', '=', 0)
+=======
+            ->where('OPR_HREC_TBL.OPR_HREC_SENDAPP_STD', '=', null)
+>>>>>>> 6eff0287dc32e2ea99c50d6cc48fe346852a0a93
             ->select('OPR_HREC_TBL.*', 'TEC_RF_HREC_TBL.*')
             ->orderBy('OPR_HREC_TBL.OPR_HREC_ID', 'desc')
             ->get();
@@ -778,5 +786,28 @@ class ApiGetDataController extends Controller
             'rfData_rejected' => $rfData_rejected,
             'operator_rejected' => $operator_rejected,
         ]);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/get/users",
+     *     summary="Get users on web",
+     *     tags={"Get Users"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid request"
+     *     )
+     * )
+     */
+
+    public function GetUsersWeb()
+    {
+        $users = DB::table('VUSER_DEPT')->get();
+
+        return response()->json($users);
     }
 }

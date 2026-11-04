@@ -36,6 +36,7 @@ RUN a2enmod rewrite
 COPY . /var/www/html
 
 # ตั้งสิทธิ์
+<<<<<<< HEAD
 RUN chown -R www-data:www-data /var/www/html
 
 # ติดตั้ง composer
@@ -43,3 +44,19 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
 EXPOSE 80
+=======
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+# ติดตั้ง composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# อย่า run composer install ตอน build ถ้าใช้ volume
+# RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+
+# Expose port Apache
+EXPOSE 80
+
+# 🔹 เพิ่มคำสั่งรัน Apache เพื่อ container ไม่ stop
+CMD ["apache2-foreground"]
+>>>>>>> 6eff0287dc32e2ea99c50d6cc48fe346852a0a93
