@@ -5,6 +5,11 @@
         "description": "API PROJECT MODEL CHANGE RECORD",
         "version": "1.0.0"
     },
+    "servers": [
+        {
+            "url": "/api"
+        }
+    ],
     "paths": {
         "/get/won": {
             "get": {
@@ -139,6 +144,243 @@
                 ],
                 "summary": "Get All Record Data",
                 "operationId": "970b6098d350b87cafeaa568554a5209",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "users": {
+            "get": {
+                "tags": [
+                    "Get Users"
+                ],
+                "summary": "Get users on web",
+                "operationId": "1954c507bd1f0864d965f3927acdc203",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/approve/users": {
+            "get": {
+                "tags": [
+                    "Get Approve Users"
+                ],
+                "summary": "Get approve users on web",
+                "operationId": "ce6e0bf14adc48694d17d0bc6aa0ad2b",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/session/user": {
+            "get": {
+                "tags": [
+                    "Session"
+                ],
+                "summary": "Get current session information from URL login",
+                "operationId": "2fcd3761e0cc600672a920cfb12352ac",
+                "responses": {
+                    "200": {
+                        "description": "Return current session data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "empno": {
+                                            "type": "string",
+                                            "example": "2240003"
+                                        },
+                                        "username": {
+                                            "type": "string",
+                                            "example": "Natdanai Jansomboon"
+                                        },
+                                        "department": {
+                                            "type": "string",
+                                            "example": "SYS"
+                                        },
+                                        "USE_PERMISSION": {
+                                            "type": "integer",
+                                            "example": 9
+                                        },
+                                        "sec": {
+                                            "type": "string",
+                                            "example": "EMS"
+                                        },
+                                        "MSECT_ID": {
+                                            "type": "string",
+                                            "example": "SC227-0001"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Session expired or unauthorized"
+                    }
+                }
+            }
+        },
+        "/appr/data/cp": {
+            "get": {
+                "tags": [
+                    "Get Approve Users"
+                ],
+                "summary": "Get approve users on web",
+                "operationId": "f4cada1acca1fdfe423529cb71e3c02f",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/get/cus": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Get customer list",
+                "operationId": "931a1e4873ee395a1e49c488357f3c75",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/get/issueno": {
+            "get": {
+                "tags": [
+                    "Get Record Form"
+                ],
+                "summary": "Get Issue number",
+                "operationId": "211b6720328baa4faff5985007bfcfd9",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/get/settings": {
+            "get": {
+                "tags": [
+                    "Get Record Form"
+                ],
+                "summary": "Get Issue number",
+                "operationId": "5c38613955741a4fca4e9a1c8fd965a6",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/get/alerts": {
+            "get": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Alert Data for Approve",
+                "operationId": "17230ce30b9c1d0dcb0cc08f3954d3bd",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/get/reports": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Report Model Change Record",
+                "operationId": "6a8656761237da0e58088f5d2576c6e3",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/get/reports/byid": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Report Model Change Record by ID",
+                "operationId": "cf4c0b63aea5a3b4d06aec3f1dd8e7a5",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/get/reports/nocomplete": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Report Model Change Record No Complete",
+                "operationId": "09da8a343c775e2fa5a49afd8c14b94c",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/get/rejectedData": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Rejected Data Record",
+                "operationId": "fcbdad80ad1745d08600806256e3bc0c",
                 "responses": {
                     "200": {
                         "description": "Successful operation"
@@ -724,6 +966,328 @@
                 }
             }
         },
+        "/rfinsert-test": {
+            "post": {
+                "tags": [
+                    "Technichian Form"
+                ],
+                "summary": "Create a new Technichian form process RF",
+                "operationId": "f0a508a69b385d303fec3dcb2c1aff7e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "load_inp": {
+                                        "type": "string"
+                                    },
+                                    "pitch_rf": {
+                                        "type": "string"
+                                    },
+                                    "cln_inp": {
+                                        "type": "string"
+                                    },
+                                    "func": {
+                                        "type": "string"
+                                    },
+                                    "stack_inp": {
+                                        "type": "string"
+                                    },
+                                    "trace_inp": {
+                                        "type": "string"
+                                    },
+                                    "etc_details": {
+                                        "type": "string"
+                                    },
+                                    "printer_std": {
+                                        "type": "string"
+                                    },
+                                    "printer_prg": {
+                                        "type": "string"
+                                    },
+                                    "metalmask": {
+                                        "type": "string"
+                                    },
+                                    "ref_mm": {
+                                        "type": "string"
+                                    },
+                                    "squee": {
+                                        "type": "string"
+                                    },
+                                    "sup_rf": {
+                                        "type": "string"
+                                    },
+                                    "solder": {
+                                        "type": "string"
+                                    },
+                                    "glue_rf": {
+                                        "type": "string"
+                                    },
+                                    "glue_prg": {
+                                        "type": "string"
+                                    },
+                                    "glue_num": {
+                                        "type": "string"
+                                    },
+                                    "solder_use": {
+                                        "type": "string"
+                                    },
+                                    "solder_prgnm": {
+                                        "type": "string"
+                                    },
+                                    "mounter_ref_inp": {
+                                        "type": "string"
+                                    },
+                                    "prg_ref_mount1": {
+                                        "type": "string"
+                                    },
+                                    "noz_ref_mount1": {
+                                        "type": "string"
+                                    },
+                                    "sup_ref_mount1": {
+                                        "type": "string"
+                                    },
+                                    "mounter2_ref_inp": {
+                                        "type": "string"
+                                    },
+                                    "prg_ref_mount2": {
+                                        "type": "string"
+                                    },
+                                    "noz_ref_mount2": {
+                                        "type": "string"
+                                    },
+                                    "sup_ref_mount2": {
+                                        "type": "string"
+                                    },
+                                    "mounter3_ref_inp": {
+                                        "type": "string"
+                                    },
+                                    "prg_ref_mount3": {
+                                        "type": "string"
+                                    },
+                                    "noz_ref_mount3": {
+                                        "type": "string"
+                                    },
+                                    "sup_ref_mount3": {
+                                        "type": "string"
+                                    },
+                                    "mounter4_ref_inp": {
+                                        "type": "string"
+                                    },
+                                    "prg_ref_mount4": {
+                                        "type": "string"
+                                    },
+                                    "noz_ref_mount4": {
+                                        "type": "string"
+                                    },
+                                    "sup_ref_mount4": {
+                                        "type": "string"
+                                    },
+                                    "mounter_ref_inps": {
+                                        "type": "string"
+                                    },
+                                    "prg_ref_inspct": {
+                                        "type": "string"
+                                    },
+                                    "reflow_rf_std": {
+                                        "type": "string"
+                                    },
+                                    "prg_rf_reflow": {
+                                        "type": "string"
+                                    },
+                                    "oxygen_rf_reflow_std": {
+                                        "type": "string"
+                                    },
+                                    "oxyen_rf_use": {
+                                        "type": "string"
+                                    },
+                                    "sup_rf_reflow_std": {
+                                        "type": "string"
+                                    },
+                                    "temp_rf_std": {
+                                        "type": "string"
+                                    },
+                                    "cooling_rf_std": {
+                                        "type": "string"
+                                    },
+                                    "auto_rf_inps": {
+                                        "type": "string"
+                                    },
+                                    "prg_rf_auto": {
+                                        "type": "string"
+                                    },
+                                    "ng_stock_rf_std": {
+                                        "type": "string"
+                                    },
+                                    "ng_stock_rf_pitch": {
+                                        "type": "string"
+                                    },
+                                    "trace_rf_inp_std": {
+                                        "type": "string"
+                                    },
+                                    "unloader_rf_std": {
+                                        "type": "string"
+                                    },
+                                    "unloader_rf_pitch": {
+                                        "type": "string"
+                                    },
+                                    "empno": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Insert success"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/insert/master": {
+            "post": {
+                "tags": [
+                    "Form"
+                ],
+                "summary": "Insert master user approve",
+                "operationId": "e2fdc7ba10194733670adbe9418ebb13",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "levels": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/insert/approve": {
+            "post": {
+                "tags": [
+                    "Form"
+                ],
+                "summary": "Insert approve of users",
+                "operationId": "d7b72806f5eafee170ca492474c9a615",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "OPR_HREC_ID": {
+                                        "type": "string"
+                                    },
+                                    "TEC_CPORRF_HREC_ID": {
+                                        "type": "string"
+                                    },
+                                    "MASTER_ID": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/insert/approvr/rf": {
+            "post": {
+                "tags": [
+                    "Form"
+                ],
+                "summary": "Insert approve of users",
+                "operationId": "b9d4272d6f4dc1b924236c359173b5f7",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "OPR_HREC_ID": {
+                                        "type": "string"
+                                    },
+                                    "TEC_CPORRF_HREC_ID": {
+                                        "type": "string"
+                                    },
+                                    "MASTER_ID": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/insert/settings": {
+            "post": {
+                "tags": [
+                    "Form"
+                ],
+                "summary": "Insert Master Submat and Glue",
+                "operationId": "1d7d33bfec14c60ade2eac04a5590993",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "category": {
+                                        "type": "string"
+                                    },
+                                    "maker": {
+                                        "type": "string"
+                                    },
+                                    "submatnumber": {
+                                        "type": "string"
+                                    },
+                                    "customers": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
         "/oprform/{id}": {
             "put": {
                 "tags": [
@@ -988,6 +1552,575 @@
                     }
                 }
             }
+        },
+        "/update/approve": {
+            "put": {
+                "tags": [
+                    "Approval"
+                ],
+                "summary": "Update approval status of OPR form",
+                "operationId": "9a7c8079ed687c98b2c0c746cf3f32ef",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "opr_hrec_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "approve_std": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Approval status updated successfully"
+                    },
+                    "404": {
+                        "description": "Record not found"
+                    }
+                }
+            }
+        },
+        "/update/reject": {
+            "put": {
+                "tags": [
+                    "Approval"
+                ],
+                "summary": "Update approval status of OPR form",
+                "operationId": "d755134c5c792b38a669ee106c129e3b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "opr_hrec_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "approve_std": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Approval status updated successfully"
+                    },
+                    "404": {
+                        "description": "Record not found"
+                    }
+                }
+            }
+        },
+        "/cpupdate": {
+            "put": {
+                "tags": [
+                    "Technichian Form"
+                ],
+                "summary": "Update Technichian form process CP",
+                "operationId": "9565e3e0f40b81be40cd42fd27cea0f2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "pitch": {
+                                        "type": "string",
+                                        "example": "1.0"
+                                    },
+                                    "etc_details": {
+                                        "type": "string",
+                                        "example": "Additional details"
+                                    },
+                                    "prg_nm": {
+                                        "type": "string",
+                                        "example": "Program A"
+                                    },
+                                    "glu_num": {
+                                        "type": "string",
+                                        "example": "GLU123"
+                                    },
+                                    "headunit": {
+                                        "type": "string",
+                                        "example": "HU-01"
+                                    },
+                                    "bpst_detail": {
+                                        "type": "string",
+                                        "example": "BPST detail info"
+                                    },
+                                    "prg2_nm": {
+                                        "type": "string",
+                                        "example": "Program B"
+                                    },
+                                    "glu2_num": {
+                                        "type": "string",
+                                        "example": "GLU456"
+                                    },
+                                    "headunit2": {
+                                        "type": "string",
+                                        "example": "HU-02"
+                                    },
+                                    "bpst2_detail": {
+                                        "type": "string",
+                                        "example": "BPST2 detail info"
+                                    },
+                                    "load_inp": {
+                                        "type": "string",
+                                        "example": "LOAD-IN"
+                                    },
+                                    "cln_inp": {
+                                        "type": "string",
+                                        "example": "CLEAN-IN"
+                                    },
+                                    "func": {
+                                        "type": "string",
+                                        "example": "Function name"
+                                    },
+                                    "stack_inp": {
+                                        "type": "string",
+                                        "example": "STACK-IN"
+                                    },
+                                    "trace_inp": {
+                                        "type": "string",
+                                        "example": "TRACE-IN"
+                                    },
+                                    "confirm_bpst": {
+                                        "type": "string",
+                                        "example": "Confirmed"
+                                    },
+                                    "glu_inp": {
+                                        "type": "string",
+                                        "example": "GLU-INP"
+                                    },
+                                    "confirm_bpst2": {
+                                        "type": "string",
+                                        "example": "Confirmed 2"
+                                    },
+                                    "glu2_inp": {
+                                        "type": "string",
+                                        "example": "GLU2-INP"
+                                    },
+                                    "mounter_inp": {
+                                        "type": "string",
+                                        "example": "Mounter Input 1"
+                                    },
+                                    "mounter2_inp": {
+                                        "type": "string",
+                                        "example": "Mounter Input 2"
+                                    },
+                                    "mounter3_inp": {
+                                        "type": "string",
+                                        "example": "Mounter Input 3"
+                                    },
+                                    "mounter4_inp": {
+                                        "type": "string",
+                                        "example": "Mounter Input 4"
+                                    },
+                                    "prg_mount1": {
+                                        "type": "string",
+                                        "example": "Program Mount 1"
+                                    },
+                                    "noz_mount1": {
+                                        "type": "string",
+                                        "example": "Nozzle 1"
+                                    },
+                                    "sup_mount1": {
+                                        "type": "string",
+                                        "example": "Supplier 1"
+                                    },
+                                    "prg_mount2": {
+                                        "type": "string",
+                                        "example": "Program Mount 2"
+                                    },
+                                    "noz_mount2": {
+                                        "type": "string",
+                                        "example": "Nozzle 2"
+                                    },
+                                    "sup_mount2": {
+                                        "type": "string",
+                                        "example": "Supplier 2"
+                                    },
+                                    "prg_mount3": {
+                                        "type": "string",
+                                        "example": "Program Mount 3"
+                                    },
+                                    "noz_mount3": {
+                                        "type": "string",
+                                        "example": "Nozzle 3"
+                                    },
+                                    "sup_mount3": {
+                                        "type": "string",
+                                        "example": "Supplier 3"
+                                    },
+                                    "prg_mount4": {
+                                        "type": "string",
+                                        "example": "Program Mount 4"
+                                    },
+                                    "noz_mount4": {
+                                        "type": "string",
+                                        "example": "Nozzle 4"
+                                    },
+                                    "sup_mount4": {
+                                        "type": "string",
+                                        "example": "Supplier 4"
+                                    },
+                                    "mount_inps": {
+                                        "type": "string",
+                                        "example": "Mount Inputs"
+                                    },
+                                    "prg_inspct": {
+                                        "type": "string",
+                                        "example": "Inspection Program"
+                                    },
+                                    "reflow_std": {
+                                        "type": "string",
+                                        "example": "Reflow Standard"
+                                    },
+                                    "prg_reflow": {
+                                        "type": "string",
+                                        "example": "Reflow Program"
+                                    },
+                                    "oxygen_reflow_std": {
+                                        "type": "string",
+                                        "example": "Oxygen Standard"
+                                    },
+                                    "oxyen_use": {
+                                        "type": "string",
+                                        "example": "Used"
+                                    },
+                                    "sup_reflow_std": {
+                                        "type": "string",
+                                        "example": "Supplier Reflow"
+                                    },
+                                    "temp_std": {
+                                        "type": "string",
+                                        "example": "Temperature 250C"
+                                    },
+                                    "cooling_std": {
+                                        "type": "string",
+                                        "example": "Cooling Standard"
+                                    },
+                                    "auto_inps": {
+                                        "type": "string",
+                                        "example": "Auto Inputs"
+                                    },
+                                    "prg_auto": {
+                                        "type": "string",
+                                        "example": "Auto Program"
+                                    },
+                                    "ng_stock_std": {
+                                        "type": "string",
+                                        "example": "NG Stock Standard"
+                                    },
+                                    "ng_stock_pitch": {
+                                        "type": "string",
+                                        "example": "Pitch 10mm"
+                                    },
+                                    "trace_inp_std": {
+                                        "type": "string",
+                                        "example": "Trace Standard"
+                                    },
+                                    "unloader_std": {
+                                        "type": "string",
+                                        "example": "Unloader Standard"
+                                    },
+                                    "unloader_pitch": {
+                                        "type": "string",
+                                        "example": "Pitch 20mm"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data inserted successfully"
+                    }
+                }
+            }
+        },
+        "/rfupdate": {
+            "put": {
+                "tags": [
+                    "Technichian Form"
+                ],
+                "summary": "Update Technichian form process RF",
+                "operationId": "385ccb68491715b937f68740cbced8e0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "load_inp": {
+                                        "type": "string"
+                                    },
+                                    "pitch_rf": {
+                                        "type": "string"
+                                    },
+                                    "cln_inp": {
+                                        "type": "string"
+                                    },
+                                    "func": {
+                                        "type": "string"
+                                    },
+                                    "stack_inp": {
+                                        "type": "string"
+                                    },
+                                    "trace_inp": {
+                                        "type": "string"
+                                    },
+                                    "etc_details": {
+                                        "type": "string"
+                                    },
+                                    "printer_std": {
+                                        "type": "string"
+                                    },
+                                    "printer_prg": {
+                                        "type": "string"
+                                    },
+                                    "metalmask": {
+                                        "type": "string"
+                                    },
+                                    "ref_mm": {
+                                        "type": "string"
+                                    },
+                                    "squee": {
+                                        "type": "string"
+                                    },
+                                    "sup_rf": {
+                                        "type": "string"
+                                    },
+                                    "solder": {
+                                        "type": "string"
+                                    },
+                                    "glue_rf": {
+                                        "type": "string"
+                                    },
+                                    "glue_prg": {
+                                        "type": "string"
+                                    },
+                                    "glue_num": {
+                                        "type": "string"
+                                    },
+                                    "solder_use": {
+                                        "type": "string"
+                                    },
+                                    "solder_prgnm": {
+                                        "type": "string"
+                                    },
+                                    "mounter_ref_inp": {
+                                        "type": "string"
+                                    },
+                                    "prg_ref_mount1": {
+                                        "type": "string"
+                                    },
+                                    "noz_ref_mount1": {
+                                        "type": "string"
+                                    },
+                                    "sup_ref_mount1": {
+                                        "type": "string"
+                                    },
+                                    "mounter2_ref_inp": {
+                                        "type": "string"
+                                    },
+                                    "prg_ref_mount2": {
+                                        "type": "string"
+                                    },
+                                    "noz_ref_mount2": {
+                                        "type": "string"
+                                    },
+                                    "sup_ref_mount2": {
+                                        "type": "string"
+                                    },
+                                    "mounter3_ref_inp": {
+                                        "type": "string"
+                                    },
+                                    "prg_ref_mount3": {
+                                        "type": "string"
+                                    },
+                                    "noz_ref_mount3": {
+                                        "type": "string"
+                                    },
+                                    "sup_ref_mount3": {
+                                        "type": "string"
+                                    },
+                                    "mounter4_ref_inp": {
+                                        "type": "string"
+                                    },
+                                    "prg_ref_mount4": {
+                                        "type": "string"
+                                    },
+                                    "noz_ref_mount4": {
+                                        "type": "string"
+                                    },
+                                    "sup_ref_mount4": {
+                                        "type": "string"
+                                    },
+                                    "mounter_ref_inps": {
+                                        "type": "string"
+                                    },
+                                    "prg_ref_inspct": {
+                                        "type": "string"
+                                    },
+                                    "reflow_rf_std": {
+                                        "type": "string"
+                                    },
+                                    "prg_rf_reflow": {
+                                        "type": "string"
+                                    },
+                                    "oxygen_rf_reflow_std": {
+                                        "type": "string"
+                                    },
+                                    "oxyen_rf_use": {
+                                        "type": "string"
+                                    },
+                                    "sup_rf_reflow_std": {
+                                        "type": "string"
+                                    },
+                                    "temp_rf_std": {
+                                        "type": "string"
+                                    },
+                                    "cooling_rf_std": {
+                                        "type": "string"
+                                    },
+                                    "auto_rf_inps": {
+                                        "type": "string"
+                                    },
+                                    "prg_rf_auto": {
+                                        "type": "string"
+                                    },
+                                    "ng_stock_rf_std": {
+                                        "type": "string"
+                                    },
+                                    "ng_stock_rf_pitch": {
+                                        "type": "string"
+                                    },
+                                    "trace_rf_inp_std": {
+                                        "type": "string"
+                                    },
+                                    "unloader_rf_std": {
+                                        "type": "string"
+                                    },
+                                    "unloader_rf_pitch": {
+                                        "type": "string"
+                                    },
+                                    "empno": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Insert success"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/update/master": {
+            "put": {
+                "tags": [
+                    "Form"
+                ],
+                "summary": "Update master user approve",
+                "operationId": "03c7dbfddf357eaccd328424f770d5ad",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "levels": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/update/std/delete": {
+            "put": {
+                "tags": [
+                    "Form"
+                ],
+                "summary": "Update status data",
+                "operationId": "01bad3ddbcf5ab5b97a00d4c6ca26d46",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "remark": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/delete/techform/{id}": {
+            "delete": {
+                "tags": [
+                    "Form"
+                ],
+                "summary": "Delete tech form data",
+                "operationId": "c3b4bd183cd15a1bcc040f58574c17c9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the tech form to delete",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
         }
     },
     "tags": [
@@ -1016,6 +2149,30 @@
             "description": "Get Record Form"
         },
         {
+            "name": "Get Users",
+            "description": "Get Users"
+        },
+        {
+            "name": "Get Approve Users",
+            "description": "Get Approve Users"
+        },
+        {
+            "name": "Session",
+            "description": "Session"
+        },
+        {
+            "name": "Customers",
+            "description": "Customers"
+        },
+        {
+            "name": "Notification",
+            "description": "Notification"
+        },
+        {
+            "name": "Report",
+            "description": "Report"
+        },
+        {
             "name": "Form",
             "description": "Form"
         },
@@ -1034,6 +2191,10 @@
         {
             "name": "OPR Form",
             "description": "OPR Form"
+        },
+        {
+            "name": "Approval",
+            "description": "Approval"
         }
     ]
 }
