@@ -29,17 +29,16 @@ RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor 
 RUN pecl install sqlsrv pdo_sqlsrv \
     && docker-php-ext-enable sqlsrv pdo_sqlsrv
 
-# เปิด mod_rewrite
-RUN a2enmod rewrite
+# ติดตั้ง Laravel dependencies
+RUN docker-php-ext-install pdo mbstring exif pcntl bcmath gd zip
 
-# Copy source code
-COPY . /var/www/html
+# ติดตั้ง Composer
+COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
-# ตั้งสิทธิ์
-RUN chown -R www-data:www-data /var/www/html
+WORKDIR /var/www/html
+COPY . .
+RUN composer install --no-dev --optimize-autoloader
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# ติดตั้ง composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-
-EXPOSE 80
+EXPOSE 9000
+CMD ["php-fpm"]
