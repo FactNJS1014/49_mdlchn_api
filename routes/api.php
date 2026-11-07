@@ -43,6 +43,10 @@ Route::post('/insert/approve/rf', [ApiInsertController::class, 'InsertApprRF']);
 Route::post('/insert/settings', [ApiInsertController::class, 'InsertSettings']);
 Route::post('/rfinsert-test', [ApiInsertController::class, 'InsertTechRFFormTest']);
 
+//TODO : IDC = IMPORT DOCUMENT ECN
+Route::post('/IDC/ECN',[ApiInsertController::class, 'UploadDocumentECN']);
+
+
 //api put and delete
 Route::put('/oprform/update/{id}', [ApiUpdateAndDeleteController::class, 'UpdateOprForm']);
 Route::put('/oprform/rf/update/{id}', [ApiUpdateAndDeleteController::class, 'UpdateOprRfForm']);

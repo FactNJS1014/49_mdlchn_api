@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-
-
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
+use App\Imports\DocumentControlImport;
 
 class ApiInsertController extends Controller
 {
@@ -1311,5 +1312,56 @@ class ApiInsertController extends Controller
             'std' => true,
             'data' => $insert_payload,
         ]);
+    }
+
+    public function UploadDocumentECN(Request $request){
+        $empno = $request->empno;
+        $request->validate([
+            'file' => 'required|mimes:xlsx|max:2048',
+            'empno' => 'required'
+        ]);
+
+        try {
+            // * เรียกใช้งานการ Import
+            // * Excel::import(new DocumentControlImport, $request->file('file'));
+            $import = new DocumentControlImport($empno);
+            Excel::import($import, $request->file('file'));
+
+            $receiveDataofImport = $import->getResults();
+            return response()->json([
+                'status'    => 'success',
+                'dataimport'      => $receiveDataofImport
+            ]);
+        } catch (ValidationException $e) {
+            // * ดึงรายการที่พังทั้งหมด
+            $failures = $e->failures();
+            $errorMessages = [];
+
+            foreach ($failures as $failure) {
+                // * $failure->row() = บรรทัดที่เท่าไหร่ใน Excel
+                // * $failure->errors() = รายการ error ของบรรทัดนั้น (เป็น Array)
+                $lineErrors = implode(', ', $failure->errors());
+                $errorMessages[] = "แถวที่ {$failure->row()}: {$lineErrors}";
+                Log::warning("ApiInsertController > UploadDocument > error: excel file {$request->file('file')->getClientOriginalName()}: แถวที่ {$failure->row()}: {$lineErrors}");
+            }
+
+            return response()->json([
+                'status'    => 'error',
+                // * นำ error ทั้งหมดมาต่อกันด้วยการขึ้นบรรทัดใหม่ หรือขีดคั่น
+                'message'   => implode("\n", $errorMessages)
+            ], 422);
+        } catch (\Exception $e) {
+            // * --- CASE 500: ระบบพัง
+            // * บันทึกรายละเอียด Error จริงๆ ลง Log
+            Log::error("ApiInsertController > UploadDocument > System Error ในการ Import: " . $e->getMessage(), [
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+
+            return response()->json([
+                'status'    => 'system_error',
+                'message'   => 'ระบบขัดข้อง โปรดติดต่อเจ้าหน้าที่'
+            ], 500);
+        }
     }
 }
