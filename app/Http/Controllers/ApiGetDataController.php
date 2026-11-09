@@ -35,7 +35,7 @@ class ApiGetDataController extends Controller
      */
     public function DataWon()
     {
-        $data_won = DB::table('VWORLIST')
+        $data_won = DB::table('VWORLIST_1Y')
             ->select('WON', 'MDLNM', 'BGCD')
             ->get();
         return response()->json($data_won);
@@ -113,7 +113,7 @@ class ApiGetDataController extends Controller
     public function CheckModelName(Request $request)
     {
         $won = $request->input('value');
-        $check_db_model = DB::table('VWORLIST')
+        $check_db_model = DB::table('VWORLIST_1Y')
             ->select('WON', 'MDLCD', 'WONQT')
             ->where('WON', $won)
             ->get();
